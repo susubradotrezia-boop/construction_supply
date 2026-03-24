@@ -1,6 +1,6 @@
 <?php
-$host = "localhost";
+$host = "caboose.proxy.rlwy.net";
 $username = "root";
-$password = "";
-$dbname = "dbsmsystem";
+$password = "KaqrNecbQPBBPEutuDAeOHirSxcygGWx";
+$dbname = "railway";
 ?>
