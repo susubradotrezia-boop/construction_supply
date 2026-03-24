@@ -1,0 +1,113 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #e8f0ee, #f4f6f9);
+         }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+         } .loginform {
+             background-color: #ffffff;
+             padding: 45px 40px;
+             width: 400px;
+             border-radius: 15px;
+             text-align: center;
+             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+             border-top: 8px solid #1f6f5e;
+             position: relative;
+                 } .loginform h2 {
+             margin-bottom: 25px;
+             color: #1f6f5e;
+         } .loginform input {
+             width: 100%;
+             padding: 14px;
+             border: 1px solid #dcdcdc;
+             border-radius: 8px;
+             outline: none;
+             font-size: 14px;
+             margin-bottom: 15px;
+             transition: all 0.3s ease;
+         } .loginform input:focus {
+             border-color: #1f6f5e;
+             box-shadow: 0 0 6px rgba(31,111,94,0.2);
+         } .loginform button {
+             width: 48%;
+             padding: 12px;
+             border: none;
+             border-radius: 30px;
+             font-weight: bold;
+             font-size: 14px;
+             cursor: pointer;
+             transition: all 0.3s ease;
+         } .loginform button:first-of-type {
+             background-color: #1f6f5e;
+             color: white;
+         } .loginform button:first-of-type:hover {
+             background-color: #155a4d;
+             transform: translateY(-2px);
+             box-shadow: 0 5px 12px rgba(31,111,94,0.3);
+         } .loginform button:last-of-type {
+             background-color: #e0e0e0;
+             color: #333;
+         } .loginform button:last-of-type:hover {
+             background-color: #c6c6c6;
+             transform: translateY(-2px);
+         } .loginform {
+             animation: fadeIn 0.6s ease-in-out;
+         } @keyframes fadeIn {
+             from {
+                 opacity: 0;
+                 transform: translateY(20px);
+             }
+             to {
+                 opacity: 1;
+                 transform: translateY(0);
+             }
+         }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="loginform">
+            <input type="text" name="" id="username" placeholder="Username"> <br><br>
+            <input type="password" name="" id="pass" placeholder="Password"> <br><br>
+            <button type="button" onclick="login();">Login</button> <button type="button">Cancel</button>
+        </div>
+    </main>
+    <script>
+        function login() {
+            var username = document.getElementById("username");
+            var password = document.getElementById("pass");
+            if (username.value == "") {
+                alert("Please enter username to proceed!");
+                username.focus();
+            } else if (password.value == "") {
+                alert("Please enter password to proceed!");
+                password.focus();
+            } else {
+                fetch("php/verifyCredentials.php?user=" + username.value + "&pass=" + password.value + "&role=Cashier")
+                .then(response => response.text())
+                .then(data => {
+                    var res = "";
+                    res = data;
+                    if (res == "0") {
+                        alert("Account combination is invalid!");
+                    } else {
+                        window.location.href = "./";
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

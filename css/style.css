@@ -1,0 +1,510 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7f8;
+}
+.table-container {
+    width: 75%;
+    margin-right: 5%;
+    margin-left: 17%;   
+    padding: 50px;
+    padding-top: 35px;
+}
+.table-header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.table-header-controls h2 {
+    font-size: 24px;
+    margin: 10px;
+}
+.table-header-controls h1 {
+    font-size: 32px;
+    margin: 10px;
+}
+.table-header-controls button {
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #10b981, #047857);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 10px 18px;
+    box-shadow: 0 4px 10px rgba(16,185,129,0.2);
+}
+.table-header-controls button:hover {
+    background: linear-gradient(135deg, #059669, #065f46);
+    transform: translateY(-2px);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+    box-shadow: 2px 3px rgba(0,0,0,0.1);
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+th {
+    background-color: #0c7466;
+    color: rgb(255, 255, 255);
+    font-weight: bold; 
+}
+td button {
+    background: linear-gradient(135deg, #e7ac15d8, #f59e0b);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 6px 14px;
+    box-shadow: 0 3px 8px rgba(245,158,11,0.25);
+}
+td button:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    transform: translateY(-1px);
+}
+td .delete-btn {
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    color: #fff;
+}
+td .delete-btn:hover {
+    background: linear-gradient(135deg, #dc2626, #7f1d1d);
+}
+.sidebar {
+    width: 14%;
+    height: 100vh;
+    background-color: #0c7466;
+    position: fixed;
+    padding: 15px;
+    top: 0;
+    left: 0;
+}
+.sidebar h2 {
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.sidebar button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.cards{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}.card {
+    padding: 20px;
+    border-radius: 15px;
+    background: #ffffff;
+    color: #0c7466;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    border-left: 6px solid #0c7466;
+}
+.blue,
+.green,
+.purple {
+    background: #ffffff;
+}
+header {
+    padding: 15px 30px; 
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    margin-left: 14%;
+    width: calc(100% - 14%);
+    box-sizing: border-box;
+    position: relative;
+    text-align: center;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 40px;
+}
+header h2 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    color: #0c7466;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    width: 100%;
+}
+header button {
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 22px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #e42b53, #c91d47);
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+header button:hover {
+    background: linear-gradient(135deg, #0c7466, #095a4f);
+    transform: translateY(-50%);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.user-form {
+    margin-left: 30%;
+    margin-top: 40px;
+    width: 480px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.user-form h2 {
+    text-align: center;
+    color: #0c7466;
+    margin-bottom: 10px;
+}
+
+.user-form h4 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: #156141;
+}
+.user-form input,
+.user-form select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    outline: none;
+}
+.user-form input:focus,
+.user-form select:focus {
+    border-color: #0c7466;
+    box-shadow: 0 0 5px rgba(12,116,102,0.2);
+}
+.user-form button {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.user-form button:first-of-type {
+    background: linear-gradient(135deg, #10b981, #047857);
+    color: white;
+}
+.user-form button:first-of-type:hover {
+    background: linear-gradient(135deg, #059669, #065f46);
+}
+.user-form button:last-of-type {
+    background: #e5e7eb;
+    color: #333;
+}
+
+.user-form button:last-of-type:hover {
+    background: #d1d5db;
+}
+.pos-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+.pos-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 6px 18px rgba(214, 36, 36, 0.08);
+}
+.pos-card button {
+    background: linear-gradient(135deg, #10b981, #047857);
+    color: #fff;
+}
+.pos-card h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #0c7466;
+}
+#search_product {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    outline: none;
+}
+#search_product:focus,
+.pos-right input:focus {
+    border-color: #0c7466;
+    box-shadow: 0 0 5px rgba(12,116,102,0.2);
+}
+.pos-right input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    outline: none;
+}
+#cartTableBody input[type="number"] {
+    width: 70px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+@media screen and (max-width: 1100px) {
+    .pos-layout {
+        grid-template-columns: 1fr;
+    }
+}
+.sales-cards .sales-card {
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.sales-cards .sales-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 18px rgba(0,0,0,0.15);
+}
+
+.sales-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sales-modal-content {
+    background: #ffffff;
+    width: 78%;
+    max-width: 950px;
+    max-height: 80vh;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+.sales-modal-header {
+    background: #ffffff;
+    color: #0c7466;
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.sales-modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #0c7466;
+}
+
+.sales-close-btn {
+    color: #0c7466;
+}
+
+.sales-modal-body th {
+    background: #f9fafb;
+    color: #374151;
+    text-align: center;
+    font-weight: 600;
+}
+
+.sales-modal-body td {
+    text-align: center;
+    background: #ffffff;
+    color: #374151;
+}
+
+.sales-modal-body tbody tr:nth-child(even) td {
+    background: #f3f4f6;
+}
+
+.sales-modal-body tbody tr:hover td {
+    background: #e6f4f1;
+}
+
+.blue-header,
+.green-header,
+.purple-header {
+    background: #ffffff;
+    color: #0c7466;
+}
+
+.blue-table th,
+.green-table th,
+.purple-table th {
+    background: #f9fafb !important;
+    color: #374151 !important;
+}
+
+.sales-modal-content {
+    position: relative;
+}
+.sales-modal-header {
+    position: relative;
+    z-index: 2;
+}
+.sales-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    z-index: 99999;
+    pointer-events: auto;
+    cursor: pointer;
+    padding: 6px 10px;
+    line-height: 1;
+}
+.products-scroll {
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    margin-top: 0;
+}
+
+.checkout-scroll {
+    max-height: 325px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.products-scroll table,
+.checkout-scroll table {
+    margin-top: 0;
+    box-shadow: none;
+    width: 100%;
+}
+
+.products-scroll thead th,
+.checkout-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.pos-card {
+    overflow: hidden;
+}
+
+.pos-left .pos-card,
+.pos-right .pos-card {
+    height: auto;
+}
+
+.pos-right .pos-card button {
+    margin-top: 8px;
+}
+
+.pos-right .pos-card input {
+    margin-bottom: 10px;
+}
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+#cashier_footer {
+    margin-top: auto;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 14px;
+    padding: 15px 5px 5px 5px;
+    text-align: center;
+    font-weight: lighter;
+}
+.sales-report-scroll {
+    max-height: 420px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 10px;
+}
+
+.sales-report-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+.top-products-scroll {
+    max-height: 420px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 10px;
+}
+
+.top-products-scroll table {
+    width: 100%;
+    margin-top: 0;
+    box-shadow: none;
+}
+
+.top-products-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.cashier-header-controls {
+    justify-content: flex-end;
+}
+.checkout-btn,
+.cancel-btn {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    margin-right: 8px;
+    min-width: 120px;
+}
+
+.checkout-btn {
+    background: linear-gradient(135deg, #10b981, #047857);
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(16,185,129,0.25);
+}
+
+.checkout-btn:hover {
+    background: linear-gradient(135deg, #059669, #065f46);
+    transform: translateY(-2px);
+}
+
+.cancel-btn {
+    background: linear-gradient(135deg, #f3f4f6, #d1d5db);
+    color: #374151;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+}
+
+.cancel-btn:hover {
+    background: linear-gradient(135deg, #e5e7eb, #9ca3af);
+    transform: translateY(-2px);
+}

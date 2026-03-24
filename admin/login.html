@@ -1,0 +1,93 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+           margin: 0;
+           padding: 0;
+           font-family: Arial, Helvetica, sans-serif;
+           background-color: #f4f6f9;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        } .loginform {
+            background-color: #ffffff;
+            padding: 50px 50px;
+            width: 380px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0,1);
+            text-align: center;
+            border-top: 6px solid #1f6f5e;
+        } .loginform input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+            font-size: 15px;
+            margin-bottom: 10px;
+        } .loginform input:focus {
+            border-color: #1f6f5e;
+        } .loginform button {
+            width: 48%;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+        } .loginform button:first-of-type {
+            background-color: #1f6f5e;
+            color: white;
+        } .loginform button:first-of-type:hover {
+            background-color: #155a4d;
+        } .loginform button:last-of-type {
+            background-color: #ddd;
+            color: #333;
+        } .loginform button:last-of-type:hover {
+            background-color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="loginform">
+            <input type="text" name="" id="username" placeholder="Username"> <br><br>
+            <input type="password" name="" id="pass" placeholder="Password"> <br><br>
+            <button type="button" onclick="login();">Login</button> <button type="button">Cancel</button>
+        </div>
+    </main>
+    <script>
+        function login() {
+            var username = document.getElementById("username");
+            var password = document.getElementById("pass");
+            if (username.value == "") {
+                alert("Please enter username to proceed!");
+                username.focus();
+            } else if (password.value == "") {
+                alert("Please enter password to proceed!");
+                password.focus();
+            } else {
+                fetch("php/verifyCredentials.php?user=" + username.value + "&pass=" + password.value + "&role=Admin")
+                .then(response => response.text())
+                .then(data => {
+                    var res = "";
+                    res = data;
+                    if (res == "0") {
+                        alert("Account combination is invalid!");
+                    } else {
+                        window.location.href = "./";
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

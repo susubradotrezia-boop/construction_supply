@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cashier POS</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+    header {
+        margin-left: 0;
+        width: 100%;
+        padding-right: 220px;
+    }
+
+    .table-container {
+        width: 95%;
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+        padding: 30px;
+        padding-top: 35px;
+    }
+
+    #cashier_header_info {
+        position: absolute;
+        right: 150px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #0c7466;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: right;
+        line-height: 1.4;
+        white-space: nowrap;
+    }
+
+    .pos-layout {
+        grid-template-columns: 2.3fr 1fr;
+    }
+
+    .products-scroll {
+        max-height: 650px;
+    }
+
+    @media screen and (max-width: 1100px) {
+        #cashier_header_info {
+            position: static;
+            transform: none;
+            text-align: center;
+            margin-top: 10px;
+            white-space: normal;
+        }
+
+        header {
+            padding-right: 30px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .table-container {
+            width: 96%;
+            margin-left: 2%;
+            margin-right: 2%;
+            padding: 20px;
+        }
+
+        .pos-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+    <header>
+        <h2>CONSTRUCTION SUPPLIES</h2>
+        <div id="cashier_header_info"></div>
+        <button onclick="logout();">Logout</button>
+    </header>
+
+    <div id="tblContainer" class="table-container"></div>
+    <script src="../js.js"></script>
+    <script type="text/javascript">
+        verifylog();
+        posPage();
+
+        loadCashierDetails();
+        setInterval(loadCashierDetails, 1000);
+
+        var cart = [];
+
+        function posPage() {
+            fetch("php/pos.php")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("tblContainer").innerHTML = data;
+                renderCart();
+            });
+        }
+
+        function filterProducts() {
+            var input = document.getElementById("search_product");
+            var filter = input.value.toLowerCase();
+            var rows = document.querySelectorAll("#posProductsTable tbody tr");
+
+            rows.forEach(function(row) {
+                var txt = row.innerText.toLowerCase();
+                if (txt.indexOf(filter) > -1) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        function addToCart(product_id, product_name, price, unit, stock) {
+            price = parseFloat(price);
+            stock = parseInt(stock);
+
+            var found = false;
+
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].product_id == product_id) {
+                    if (cart[i].quantity < stock) {
+                        cart[i].quantity += 1;
+                        cart[i].subtotal = cart[i].quantity * cart[i].price;
+                    } else {
+                        alert("Insufficient stock!");
+                    }
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                if (stock > 0) {
+                    cart.push({
+                        product_id: product_id,
+                        product_name: product_name,
+                        price: price,
+                        unit: unit,
+                        stock: stock,
+                        quantity: 1,
+                        subtotal: price
+                    });
+                } else {
+                    alert("Out of stock!");
+                }
+            }
+
+            renderCart();
+        }
+
+        function renderCart() {
+            var cartTableBody = document.getElementById("cartTableBody");
+            var total_amount = document.getElementById("total_amount");
+
+            if (!cartTableBody || !total_amount) {
+                return;
+            }
+
+            cartTableBody.innerHTML = "";
+            var total = 0;
+
+            if (cart.length == 0) {
+                cartTableBody.innerHTML = '<tr><td colspan="5">No items in cart.</td></tr>';
+            } else {
+                for (var i = 0; i < cart.length; i++) {
+                    total += cart[i].subtotal;
+
+                    cartTableBody.innerHTML += `
+                        <tr>
+                            <td>${cart[i].product_name} (${cart[i].unit})</td>
+                            <td>₱${cart[i].price.toFixed(2)}</td>
+                            <td>
+                                <input type="number" min="1" max="${cart[i].stock}" value="${cart[i].quantity}" onchange="updateQuantity(${i}, this.value)">
+                            </td>
+                            <td>₱${cart[i].subtotal.toFixed(2)}</td>
+                            <td><button class="delete-btn" onclick="removeFromCart(${i})">Remove</button></td>
+                        </tr>
+                    `;
+                }
+            }
+
+            total_amount.value = "₱" + total.toFixed(2);
+            computeChange();
+        }
+
+        function updateQuantity(index, qty) {
+            qty = parseInt(qty);
+
+            if (isNaN(qty) || qty <= 0) {
+                qty = 1;
+            }
+
+            if (qty > cart[index].stock) {
+                alert("Insufficient stock!");
+                qty = cart[index].stock;
+            }
+
+            cart[index].quantity = qty;
+            cart[index].subtotal = cart[index].quantity * cart[index].price;
+            renderCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+
+        function computeChange() {
+            var total_amount = document.getElementById("total_amount");
+            var cash_amount = document.getElementById("cash_amount");
+            var change_amount = document.getElementById("change_amount");
+
+            if (!total_amount || !cash_amount || !change_amount) {
+                return;
+            }
+
+            var total = parseFloat((total_amount.value || "0").replace("₱",""));
+            var cash = parseFloat(cash_amount.value || 0);
+            var change = cash - total;
+
+            change_amount.value = "₱" + change.toFixed(2);
+        }
+
+        function clearSale() {
+            cart = [];
+            renderCart();
+
+            var customer_name = document.getElementById("customer_name");
+            var cash_amount = document.getElementById("cash_amount");
+            var change_amount = document.getElementById("change_amount");
+
+            if (customer_name) customer_name.value = "";
+            if (cash_amount) cash_amount.value = "";
+            if (change_amount) change_amount.value = "";
+        }
+
+        function checkoutSale() {
+            var customer_name = document.getElementById("customer_name");
+            var total_amount = document.getElementById("total_amount");
+            var cash_amount = document.getElementById("cash_amount");
+            var change_amount = document.getElementById("change_amount");
+
+            if (customer_name.value == "") {
+                alert("Please enter customer name to proceed!");
+                customer_name.focus();
+            } else if (cart.length == 0) {
+                alert("No items in cart.");
+            } else if (cash_amount.value == "") {
+                alert("Please enter cash amount to proceed!");
+                cash_amount.focus();
+            } else if (parseFloat(cash_amount.value) < parseFloat(total_amount.value.replace("₱",""))) {
+                alert("Cash amount is not enough!");
+                cash_amount.focus();
+            } else {
+                var cart_data = JSON.stringify(cart);
+                    fetch("php/saveSale.php?customer_name=" + encodeURIComponent(customer_name.value) + "&total_amount=" + encodeURIComponent(total_amount.value.replace("₱","")) + "&cash_amount=" + encodeURIComponent(cash_amount.value) + "&change_amount=" + encodeURIComponent(change_amount.value.replace("₱","")) + "&cart_data=" + encodeURIComponent(cart_data))
+                .then(response => response.text())
+                .then(data => {
+                    if (data == "success") {
+                        alert("Sale saved successfully!");
+                        clearSale();
+                        posPage();
+                    } else {
+                        alert(data);
+                    }
+                });
+            }
+        }
+               function loadCashierDetails() {
+                  fetch("php/loadCashierDetails.php")
+                  .then(response => response.text())
+                  .then(data => {
+                  document.getElementById("cashier_header_info").innerHTML = data;
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+      <header>
+        <h2>CONSTRUCTION SUPPLIES</h2>
+      <button onclick="logout();">Logout</button>
+    </header>
+    <div class="sidebar">
+      <h2>ADMIN</h2>
+      <button onclick="dashboard();">Dashboard</button>
+      <button onclick="usersList();">Users</button>
+      <button onclick="category();">Category</button>
+      <button onclick="brandList();">Brands</button>
+      <button onclick="product();">Products</button>
+      </div>
+
+    <div id="tblContainer" class="table-container"></div> 
+    <script src="../js.js"></script>
+    <script type="text/javascript">  
+         verifylog();
+         usersList();
+         function brandList() {
+             fetch("php/brandList.php")
+             .then(response => response.text())
+             .then(data => {
+                 document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+          function category() {
+             fetch("php/category.php")
+             .then(response => response.text())
+             .then(data => {
+                 document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+          function dashboard() {
+             fetch("php/dashboard.php")
+             .then(response => response.text())
+             .then(data => {
+                document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+          function product() {
+             fetch("php/product.php")
+             .then(response => response.text())
+             .then(data => {
+                 document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+         function userEntryForm() {
+             fetch("php/userEntryForm.php")
+             .then(response => response.text())
+             .then(data => {
+                 document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+          function addProduct() {
+             fetch("php/addProduct.php")
+             .then(response => response.text())
+             .then(data => {
+                 document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+          function addBrand() {
+             fetch("php/addBrand.php")
+             .then(response => response.text())
+             .then(data => {
+                 document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+          function addCategory() {
+             fetch("php/addCategory.php")
+             .then(response => response.text())
+             .then(data => {
+                 document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+          function saveUser() {
+            var lname = document.getElementById("lname");
+            var fname = document.getElementById("fname");
+            var mname = document.getElementById("mname");
+            var gender = document.getElementById("gender");
+            var cstatus = document.getElementById("cstatus");
+            var address = document.getElementById("address");
+            var role = document.getElementById("role");
+            var astatus = document.getElementById("astatus");
+            var uname = document.getElementById("username");
+            var pword = document.getElementById("password");
+            if (lname.value == "") {
+               alert("Please enter your lastname to proceed!");
+            } else if (fname.value == "") {
+               alert("Please enter your firstname to proceed!");
+            } else if (mname.value == "") {
+               alert("Please enter your middlename to proceed!");
+            } else if (gender.value == "0") {
+                alert("Please select a gender.");
+            } else if (cstatus.value == "0") {
+                alert("PLease select a civil status.");
+            } else if (role.value == "0") {
+                alert("Please select a role.");
+            } else if (astatus.value == "0") {
+                alert("Please select account status.");
+            } else if (uname.value == "") {
+               alert("Please enter username to proceed!.");
+            } else if (pword.value == "") {
+               alert("Please enter password to proceed!.");
+            } else {
+                fetch("php/saveUser.php?lastname=" + lname.value + "&firstname=" + fname.value + "&middlename=" + mname.value + "&gender=" + gender.value + "&civilstatus=" + cstatus.value + "&address=" + address.value + "&role=" + role.value + "&accountstatus=" + astatus.value + "&username=" + uname.value + "&password=" + pword.value)
+                .then(response => response.text());
+                alert("Successfully saved!");
+                usersList();
+            }
+          }
+          function editUserForm(id) {
+             fetch("php/editUserForm.php?user=" + id)
+             .then(response => response.text())
+             .then(data => {
+                 document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+           function saveUserChanges(id) {
+             var lname = document.getElementById("lname");
+             var fname = document.getElementById("fname");
+             var mname = document.getElementById("mname");
+             var gender = document.getElementById("gender");
+             var cstatus = document.getElementById("cstatus");
+             var address = document.getElementById("address");
+             var role = document.getElementById("role");
+             var astatus = document.getElementById("astatus");
+             var username = document.getElementById("username");
+             var password = document.getElementById("password");
+             if (gender.value == "0") {
+                alert("Please select a gender.");
+            } else if (cstatus.value == "0") {
+                alert("PLease select a civil status.");
+            } else if (role.value == "0") {
+                alert("Please select a role.");
+            } else if (astatus.value == "0") {  
+                alert("Please select account status.");
+            } else {
+             fetch("php/saveUserChanges.php?user=" + id + "&lastname=" + lname.value + "&firstname=" + fname.value + "&middlename=" + mname.value + "&gender=" + gender.value + "&civilstatus=" + cstatus.value + "&address=" + address.value + "&role=" + role.value + "&accountstatus=" + astatus.value + "&username=" + username.value + "&password=" + password.value)
+             .then(response => response.text());
+             alert("Successfully saved!");
+             usersList();
+            }
+          }
+          function editCategoryForm(category_id) {
+             fetch("php/editCategoryForm.php?categ=" + category_id)
+             .then(response => response.text())
+             .then(data => {
+                 document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+          function saveCategoryChanges(category_id) {
+             var category_name = document.getElementById("category_name");
+             if (category_name.value == "") {
+               alert("Please select a category.");
+            } else {
+               fetch("php/saveCategoryChanges.php?categ=" + category_id + "&category_name=" + category_name.value)
+                .then(response => response.text());
+                alert("Successfully saved!");
+                category();
+            }
+          }
+          function editBrandForm(brand_id) {
+             fetch("php/editBrandForm.php?brand=" + brand_id)
+             .then(response => response.text())
+             .then(data => {
+                 document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+          function saveBrandChanges(brand_id) {
+             var brand_name = document.getElementById("brand_name");
+             if (brand_name.value == "") {
+               alert("Please select a brand.");
+            } else {
+               fetch("php/saveBrandChanges.php?brand=" + brand_id + "&brand_name=" + brand_name.value)
+                .then(response => response.text());
+                alert("Successfully saved!");
+                brandList();
+            }
+          }
+          function editProductsForm(product_id) {
+             fetch("php/editProductsForm.php?prod=" + product_id)
+             .then(response => response.text())
+             .then(data => {
+                 document.getElementById("tblContainer").innerHTML = data;
+             });
+          }
+          function saveProductsChanges(product_id) {
+            var product_name = document.getElementById("product_name");
+            var category_id = document.getElementById("category_id");
+            var brand_id = document.getElementById("brand_id");
+            var unit = document.getElementById("unit");
+            var price = document.getElementById("price");
+            var stock_quantity = document.getElementById("stock_quantity");
+            if (product_name.value == "") {
+               alert("Please enter product name to proceed!");
+               product_name.focus();
+            } else if (category_id.value =="0") {
+               alert("Please select category name to proceed!");
+               category_id.focus();
+            } else if (brand_id.value =="0") {
+               alert("Please select brand name to proceed!");
+               brand_id.focus();
+            } else if (unit.value =="0") {
+               alert("Please select unit to proceed!");
+               unit.focus();
+            } else if (price.value =="") {
+               alert("Please enter price to proceed!");
+               price.focus();
+            } else if (stock_quantity.value =="") {
+               alert("Please enter stock quantity to proceed!");
+               stock_quantity.focus();
+            } else {
+                fetch("php/saveProductsChanges.php?prod=" + product_id + "&product_name=" + product_name.value + "&category_id=" + category_id.value + "&brand_id=" + brand_id.value + "&unit=" + unit.value + "&price=" + price.value + "&stock_quantity=" + stock_quantity.value)
+                .then(response => response.text());
+               alert("Successfully saved!");
+               product();
+            }
+          }
+          function saveBrand() {
+            var brand_name = document.getElementById("brand_name");
+            if (brand_name.value == "") {
+               alert("Please enter brand name to proceed!");
+               brand_name.focus();
+            } else {
+                fetch("php/saveBrand.php?brand_name=" + brand_name.value)
+                .then(response => response.text());
+               alert("Successfully saved!");
+               brandList();
+            }
+          }
+          function saveCategory() {
+            var category_name = document.getElementById("category_name");
+            if (category_name.value == "") {
+               alert("Please enter category name to proceed!");
+               category_name.focus();
+            } else {
+                fetch("php/saveCategory.php?category_name=" + category_name.value)
+                .then(response => response.text());
+               alert("Successfully saved!");
+               category();
+            }
+          }
+          function saveProducts() {
+            var product_name = document.getElementById("product_name");
+            var category_id = document.getElementById("category_id");
+            var brand_id = document.getElementById("brand_id");
+            var unit = document.getElementById("unit");
+            var price = document.getElementById("price");
+            var stock_quantity = document.getElementById("stock_quantity");
+            if (product_name.value == "") {
+               alert("Please enter product name to proceed!");
+               product_name.focus();
+            } else if (category_id.value =="0") {
+               alert("Please select category name to proceed!");
+               category_id.focus();
+            } else if (brand_id.value =="0") {
+               alert("Please select brand name to proceed!");
+               brand_id.focus();
+            } else if (unit.value =="0") {
+               alert("Please select unit to proceed!");
+               unit.focus();
+            } else if (price.value =="") {
+               alert("Please enter price to proceed!");
+               price.focus();
+            } else if (stock_quantity.value =="") {
+               alert("Please enter stock quantity to proceed!");
+               stock_quantity.focus();
+            } else {
+                fetch("php/saveProducts.php?product_name=" + product_name.value + "&category_id=" + category_id.value + "&brand_id=" + brand_id.value + "&unit=" + unit.value + "&price=" + price.value + "&stock_quantity=" + stock_quantity.value)
+                .then(response => response.text());
+               alert("Successfully saved!");
+               product();
+            }
+          }
+          function deleteUser(id) {
+            var msg = confirm("Are you sure you want to delete this user?");
+            if (msg == true) {
+               fetch("php/deleteUser.php?user=" + id)
+               .then(response => response.text())
+               .then(data => {
+                   alert("User deleted successfully!");
+                   usersList();
+                });
+            }
+        }
+          function deleteCategory(category_id) {
+            var msg = confirm("Are you sure you want to delete this category?");
+            if (msg == true) {
+               fetch("php/deleteCategory.php?categ=" + category_id)
+               .then(response => response.text())
+               .then(data => {
+                   alert("Category deleted successfully!");
+                   category();
+                });
+            }
+        }
+          function deleteBrand(brand_id) {
+            var msg = confirm("Are you sure you want to delete this brand?");
+            if (msg == true) {
+               fetch("php/deleteBrand.php?brand=" + brand_id)
+               .then(response => response.text())
+               .then(data => {
+                   alert("Brand deleted successfully!");
+                   brandList();
+                });
+            }
+        }
+          function deleteProduct(product_id) {
+            var msg = confirm("Are you sure you want to delete this product?");
+            if (msg == true) {
+               fetch("php/deleteProduct.php?prod=" + product_id)
+               .then(response => response.text())
+               .then(data => {
+                   alert("Product deleted successfully!");
+                   product();
+                });
+            }
+        }
+          function openSalesReport(period) {
+            var modal = document.getElementById("salesReportModal");
+            var modalTitle = document.getElementById("salesModalTitle");
+            var modalBody = document.getElementById("salesModalBody");
+            var modalHeader = document.querySelector(".sales-modal-header");          
+
+            modal.style.display = "flex";
+            modalBody.innerHTML = "Loading...";          
+
+            modalHeader.classList.remove("blue-header", "green-header", "purple-header");          
+
+            if (period == "daily") {
+                modalTitle.innerHTML = "Daily Sales Details";
+                modalHeader.classList.add("blue-header");
+            } 
+            else if (period == "monthly") {
+                modalTitle.innerHTML = "Monthly Sales Details";
+                modalHeader.classList.add("green-header");
+            } 
+            else if (period == "yearly") {
+                modalTitle.innerHTML = "Yearly Sales Details";
+                modalHeader.classList.add("purple-header");
+            }          
+            fetch("php/salesReportDetails.php?period=" + period + "&color=" + period)
+            .then(response => response.text())
+            .then(data => {
+                modalBody.innerHTML = data;
+            });
+        }
+          function closeSalesReport() {
+            var modal = document.getElementById("salesReportModal");
+            modal.style.display = "none";
+        }        
+
+          window.onclick = function(event) {
+            var modal = document.getElementById("salesReportModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+</script>
+</body>
+</html>
